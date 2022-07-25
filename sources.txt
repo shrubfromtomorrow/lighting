@@ -1,0 +1,2 @@
+https://cdn-shop.adafruit.com/datasheets/WS2811.pdf
+https://docs.circuitpython.org/projects/neopixel/en/latest/
