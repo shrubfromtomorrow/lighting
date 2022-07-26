@@ -33,6 +33,7 @@ import os
 imNum = 0
 
 lightDict = {}
+lightList = []
 
 for image in os.listdir('Images'):
     f = os.path.join('Images', image)
@@ -44,25 +45,20 @@ for image in os.listdir('Images'):
 
         lightGrey = np.copy(light)
         lightGrey = cv2.cvtColor(lightGrey, cv2.COLOR_RGB2GRAY)
-        print(cv2.minMaxLoc(lightGrey))
+        lightBlur = cv2.GaussianBlur(lightGrey, (81, 81), 0)
+        (minVal, maxVal, minLoc, maxLoc) = cv2.minMaxLoc(lightBlur)
 
-        maxLightX = cv2.minMaxLoc(lightGrey)[3][0]
-        maxLightY = cv2.minMaxLoc(lightGrey)[3][1]
+        lightCirc = cv2.circle(lightRGB, maxLoc, 21, (0, 0, 255), 4)
 
-        l = 20
-        coord1 = (maxLightX - l, maxLightY - l)
-        coord2 = (maxLightX + l, maxLightY + l)
-        color = (255, 0, 0)
-        t = 2
+        cv2.imwrite(f'Images/CircIms/c{imNum}Alt.png', lightCirc)
 
-        lightBox = np.copy(lightRGB)
-        lightBox = cv2.rectangle(lightBox, coord1, coord2, color, t)
+        lightDict[f'Images/c{imNum}.png'] = maxLoc
 
-        cv2.imwrite(f'Images/BoxedIms/c{imNum}Alt.png', lightBox)
-
-        lightDict[f'Images/c{imNum}.png'] = [maxLightX, maxLightY]
+        lightList.append(maxLoc)
 
         imNum += 1
 
     else:
         continue
+print(lightDict)
+print(lightList)
