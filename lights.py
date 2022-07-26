@@ -6,6 +6,17 @@ import sys
 import time
 pixels = neopixel.NeoPixel(board.D18, 50, brightness = 1, auto_write = False, pixel_order = neopixel.RGB)
 pixels.fill((0, 0, 0))
-i = int(sys.argv[1])
-pixels[i] = (255, 255, 255)
 pixels.show()
+lightList = sys.argv[1:]
+
+reps = 0
+
+lightListRev = lightList
+# lightListRev.reverse()
+
+while reps < 50:
+    pixelIndex = int(lightListRev[reps])
+    pixels[pixelIndex] = (255, 255, 255)
+    pixels.show()
+    reps += 1
+    sleep(0.05)

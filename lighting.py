@@ -18,18 +18,24 @@ lightCoords = [(414, 679), (491, 617), (505, 566),
 (873, 272), (867, 283), (938, 285),
 (870, 366), (929, 362)]
 
-highYs = {}
-highY = []
+y = []
+yS = {}
 
 lightNum = 0
 
 for light in lightCoords:
-    highYs[light[1]] = lightNum
-    highY.append(light[1])
+    yS[light[1]] = lightNum
+    y.append(light[1])
     lightNum += 1
-highY = sorted(highY, key=abs)
 
-highLight = highYs[highY[-1]]
+y = sorted(y, key=abs)
+Y = []
+yStr = []
 
+for num in y:
+    Y.append(yS[num])
 
-subprocess.run(["ssh", "pi@192.168.10.223", f"sudo python3 lights.py {highY}"])
+for value in Y:
+    yStr.append(str(value))
+
+subprocess.run(["ssh", "pi@192.168.10.223", "sudo python3 lights.py"] + yStr)
