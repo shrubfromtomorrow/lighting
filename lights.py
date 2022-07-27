@@ -12,7 +12,7 @@ lightList = sys.argv[1:]
 reps = 0
 
 lightListRev = lightList
-# lightListRev.reverse()
+#lightListRev.reverse()
 
 while reps < 50:
     pixelIndex = int(lightListRev[reps])
