@@ -3,20 +3,18 @@ import neopixel
 from time import sleep
 from random import randint
 import sys
-import time
-pixels = neopixel.NeoPixel(board.D18, 50, brightness = 1, auto_write = False, pixel_order = neopixel.RGB)
-pixels.fill((0, 0, 0))
-pixels.show()
+pixels = neopixel.NeoPixel(board.D18, 100, brightness = 1, auto_write = False, pixel_order = neopixel.RGB)
 lightList = sys.argv[1:]
+
+print(lightList)
 
 reps = 0
 
-lightListRev = lightList
-#lightListRev.reverse()
+# lightList.reverse()
 
-while reps < 50:
-    pixelIndex = int(lightListRev[reps])
+while reps < 100:
+    pixelIndex = int(lightList[reps])
     pixels[pixelIndex] = (255, 255, 255)
     pixels.show()
     reps += 1
-    sleep(0.05)
+    sleep(0.01)

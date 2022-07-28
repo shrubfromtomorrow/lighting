@@ -35,24 +35,24 @@ imNum = 0
 lightDict = {}
 lightList = []
 
-for image in os.listdir('Images'):
-    f = os.path.join('Images', image)
+for image in os.listdir('Images/Images100'):
+    f = os.path.join('Images/Images100', image)
     if os.path.isfile(f):
-        light = cv2.imread(f'Images/c{imNum}.png')
+        light = cv2.imread(f'Images/Images100/c{imNum}.png')
 
         lightRGB = np.copy(light)
         lightRGB = cv2.cvtColor(lightRGB, cv2.COLOR_RGB2BGR)
 
         lightGrey = np.copy(light)
         lightGrey = cv2.cvtColor(lightGrey, cv2.COLOR_RGB2GRAY)
-        lightBlur = cv2.GaussianBlur(lightGrey, (81, 81), 0)
+        lightBlur = cv2.GaussianBlur(lightGrey, (21, 21), 0)
         (minVal, maxVal, minLoc, maxLoc) = cv2.minMaxLoc(lightBlur)
 
         lightCirc = cv2.circle(lightRGB, maxLoc, 21, (0, 0, 255), 4)
 
-        cv2.imwrite(f'Images/CircIms/c{imNum}Alt.png', lightCirc)
+        cv2.imwrite(f'Images/CircIms/CircImages100/c{imNum}Alt.png', lightCirc)
 
-        lightDict[f'Images/c{imNum}.png'] = maxLoc
+        lightDict[f'Images/Images100/c{imNum}.png'] = maxLoc
 
         lightList.append(maxLoc)
 
