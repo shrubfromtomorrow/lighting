@@ -32,20 +32,60 @@ lightCoords = [(116, 437), (129, 483), (134, 522),
  (596, 499), (602, 501), (589, 550), (589, 555),
  (591, 582)]
 
-yS = []
+xS = [] #all y values
+yS = [] #all x values
+
+added = [] #sum of x and y values for all lights
 lightNum = 0
 
 for light in lightCoords:
+    sum = light[0] + light[1] #adding x and y values of each light
+    added.append([sum, lightNum])
+    xS.append([light[0], lightNum])
     yS.append([light[1], lightNum])
     lightNum += 1
 
-yS.sort()
+added.sort()
 
-rep = 0
+highXY = added[-1][1] #finding highest xy sum
+lowXY = added[0][1] #finding lowest xy sum
 
-while rep < 100:
-    pixelIndex = int(yS[rep])
-    pixels[pixelIndex] = (255, 255, 255)
-    pixels.show()
-    rep += 1
-    sleep(0.01)
+averageX = ((xS[highXY][0]) + (xS[lowXY][0])) / 2 #average of highest and lowest x
+
+averageY = ((yS[highXY][0]) + (yS[lowXY][0])) / 2 #average of highest and lowest y
+
+centerCoord = (averageX, averageY)
+
+centerCoordSum = averageX + averageY
+
+closestLights = {} #dictionary tying absolute value difference between center and any given light with the lightnum
+closestLightsCoord = [] #list of absolute value difference between center and any given light in sorted order
+
+lightNum = 0
+
+for light in lightCoords:
+    sum = centerCoordSum - (light[0] + light[1])
+    closestLights[sum] = lightNum
+    closestLightsCoord.append(sum)
+    lightNum += 1
+
+print(closestLights, end="\n\n")
+
+closestLightsCoord = sorted(closestLightsCoord, key=abs)
+
+lightOrder = []
+
+for difference in closestLightsCoord:
+    lightOrder.append(closestLights[difference])
+
+print(lightOrder)
+
+
+# rep = 0
+#
+# while rep < 100:
+#     pixelIndex = int(added[rep])
+#     pixels[pixelIndex] = colors[pixelIndex][1]
+#     pixels.show()
+#     rep += 1
+#     sleep(0.01)

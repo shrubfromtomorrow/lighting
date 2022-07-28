@@ -1,4 +1,9 @@
-import subprocess
+# import board
+# import neopixel
+from time import sleep
+from random import randint
+import sys
+# pixels = neopixel.NeoPixel(board.D18, 100, brightness = 1, auto_write = False, pixel_order = neopixel.RGB)
 
 lightCoords = [(116, 437), (129, 483), (134, 522),
 (88, 540), (133, 575), (96, 639), (134, 639),
@@ -37,13 +42,6 @@ for light in lightCoords:
 
 added.sort()
 
-addedStr = []
-
-print(added, end="\n\n")
-
-for value in added:
-    addedStr.append(str(value[1]))
-
 def Color(num):
     if num <= 238:
         return (255, 255, 255)
@@ -59,6 +57,15 @@ colors = []
 
 for light in added:
     colors.append([light[1], Color(light[0])])
-print(colors)
 
-# subprocess.run(["ssh", "pi@192.168.10.223", "sudo python3 lights.py"] + addedStr)
+print(added, end="\n\n")
+print(colors, end="\n\n")
+
+rep = 0
+
+while rep < 100:
+    pixelIndex = int(added[rep])
+    pixels[pixelIndex] = colors[pixelIndex][1]
+    pixels.show()
+    rep += 1
+    sleep(0.01)
