@@ -1,9 +1,9 @@
-# import board
-# import neopixel
+import board
+import neopixel
 from time import sleep
 from random import randint
 import sys
-# pixels = neopixel.NeoPixel(board.D18, 100, brightness = 1, auto_write = False, pixel_order = neopixel.RGB)
+pixels = neopixel.NeoPixel(board.D18, 100, brightness = 1, auto_write = False, pixel_order = neopixel.RGB)
 
 lightCoords = [(116, 437), (129, 483), (134, 522),
 (88, 540), (133, 575), (96, 639), (134, 639),
@@ -69,8 +69,6 @@ for light in lightCoords:
     closestLightsCoord.append(sum)
     lightNum += 1
 
-print(closestLights, end="\n\n")
-
 closestLightsCoord = sorted(closestLightsCoord, key=abs)
 
 lightOrder = []
@@ -78,14 +76,14 @@ lightOrder = []
 for difference in closestLightsCoord:
     lightOrder.append(closestLights[difference])
 
+print(closestLights, end="\n\n")
 print(lightOrder)
 
+rep = 0
 
-# rep = 0
-#
-# while rep < 100:
-#     pixelIndex = int(added[rep])
-#     pixels[pixelIndex] = colors[pixelIndex][1]
-#     pixels.show()
-#     rep += 1
-#     sleep(0.01)
+while rep < 100:
+    pixelIndex = lightOrder[rep]
+    pixels[pixelIndex] = (255, 255, 255)
+    pixels.show()
+    rep += 1
+    sleep(0.01)
