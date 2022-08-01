@@ -1,10 +1,11 @@
-# import board
-# import neopixel
+import board
+import neopixel
 from time import sleep
 from random import randint
 import sys
-# pixels = neopixel.NeoPixel(board.D18, 100, brightness = 1, auto_write = False, pixel_order = neopixel.RGB)
-
+pixels = neopixel.NeoPixel(board.D18, 100, brightness = 1, auto_write = False, pixel_order = neopixel.RGB)
+pixels.fill((0, 0, 0))
+pixels.show()
 lightCoords = [(116, 437), (129, 483), (134, 522),
 (88, 540), (133, 575), (96, 639), (134, 639),
 (126, 672), (172, 653), (172, 656), (246, 622),
@@ -43,9 +44,32 @@ xS.sort()
 
 rep = 0
 
+def Colors(num):
+    if num <= 10:
+        return (255, 0, 0)
+    elif num <= 10 + (10*1):
+        return(204, 51, 0)
+    elif num <= 10 + (10*2):
+        return(153, 102, 0)
+    elif num <= 10 + (10*3):
+        return(102, 153, 0)
+    elif num <= 10 + (10*4):
+        return(51, 204, 0)
+    elif num <= 10 + (10*5):
+        return(0, 255, 0)
+    elif num <= 10 + (10*6):
+        return(0, 204, 51)
+    elif num <= 10 + (10*7):
+        return(0, 153, 102)
+    elif num <= 10 + (10*8):
+        return(0, 102, 153)
+    elif num <= 10 + (10*9):
+        return(0, 0, 255)
+
 while rep < 100:
-    pixelIndex = int(xS[rep])
-    pixels[pixelIndex] = (255, 255, 255)
+    color = Colors(rep)
+    pixelIndex = int(xS[rep][1])
+    pixels[pixelIndex] = color
     pixels.show()
     rep += 1
     sleep(0.01)

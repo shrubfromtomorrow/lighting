@@ -3,9 +3,10 @@ import neopixel
 from time import sleep
 from random import randint
 import sys
-import math
 pixels = neopixel.NeoPixel(board.D18, 100, brightness = 1, auto_write = False, pixel_order = neopixel.RGB)
-
+pixels.fill((0, 0, 0))
+pixels.show()
+sleep(1)
 lightCoords = [(116, 437), (129, 483), (134, 522),
 (88, 540), (133, 575), (96, 639), (134, 639),
 (126, 672), (172, 653), (172, 656), (246, 622),
@@ -57,33 +58,62 @@ averageY = ((yS[highXY][0]) + (yS[lowXY][0])) / 2 #average of highest and lowest
 
 centerCoord = (averageX, averageY)
 
-distanceList = []
-distanceDict = {}
+centerCoordSum = averageX + averageY
+
+closestLights = {} #dictionary tying absolute value difference between center and any given light with the lightnum
+closestLightsCoord = [] #list of absolute value difference between center and any given light in sorted order
+colorDict = {}
+
 lightNum = 0
 
 for light in lightCoords:
-    xDif = abs(light[0] - centerCoord[0])
-    yDif = abs(light[1] - centerCoord[1])
-    distance = (xDif ** 2) + (yDif ** 2)
-    distanceSqrt = distance ** 0.5
-    distanceDict[distanceSqrt] = lightNum
-    distanceList.append(distanceSqrt)
+    sum = centerCoordSum - (light[0] + light[1])
+    closestLights[sum] = lightNum
+    colorDict[lightNum] = sum
+    closestLightsCoord.append(sum)
     lightNum += 1
 
-distanceList.sort()
+closestLightsCoord = sorted(closestLightsCoord, key=abs)
 
 lightOrder = []
 
-for distance in distanceList:
-    lightOrder.append(distanceDict[distance])
+for difference in closestLightsCoord:
+    lightOrder.append(closestLights[difference])
 
-pixels.fill((0, 0, 0))
-pixels.show()
+def Colors(num):
+    if abs(num) <= 0.5:
+        return (255, 0, 0)
+    elif abs(num) <= 0.5 + (45.95*1):
+        return (200, 50, 0)
+    elif abs(num) <= 0.5 + (45.95*2):
+        return (150, 100, 0)
+    elif abs(num) <= 0.5 + (45.95*3):
+        return (100, 150, 0)
+    elif abs(num) <= 0.5 + (45.95*4):
+        return (50, 200, 0)
+    elif abs(num) <= 0.5 + (45.95*5):
+        return (0, 255, 0)
+    elif abs(num) <= 0.5 + (45.95*6):
+        return (0, 200, 50)
+    elif abs(num) <= 0.5 + (45.95*7):
+        return (0, 150, 100)
+    elif abs(num) <= 0.5 + (45.95*8):
+        return (0, 100, 150)
+    elif abs(num) <= 0.5 + (45.95*9):
+        return (0, 50, 200)
+    else:
+        return (0, 0, 255)
 
-reps = 0
+rep = 0
 
-while reps < 100:
-    pixels[lightOrder[reps]] = (255, 255, 255)
+rotations = 0
+
+while rotations < 2500:
+    while rep < 100:
+        color = Colors(colorDict[lightOrder[rep]]+rotations)
+        pixelIndex = lightOrder[rep]
+        pixels[pixelIndex] = color
+        rep += 1
+    rep = 0
+    rotations += 1
     pixels.show()
-    sleep(0.01)
-    reps += 1

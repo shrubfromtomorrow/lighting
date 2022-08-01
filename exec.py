@@ -1,6 +1,7 @@
 import subprocess
+import sys
 
-file = "centerOut.py"
+file = sys.argv[1]
 
 scp = ["scp", f"/home/orion/Code/Python/2DLighting/LightingPatterns/{file}", "pi@192.168.10.223:"]
 
