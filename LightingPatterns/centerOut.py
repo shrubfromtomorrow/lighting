@@ -58,16 +58,14 @@ averageY = ((yS[highXY][0]) + (yS[lowXY][0])) / 2 #average of highest and lowest
 centerCoord = (averageX, averageY)
 
 distanceList = []
-distanceDict = {}
 lightNum = 0
 
 for light in lightCoords:
     xDif = abs(light[0] - centerCoord[0])
     yDif = abs(light[1] - centerCoord[1])
     distance = (xDif ** 2) + (yDif ** 2)
-    distanceSqrt = distance ** 0.5
-    distanceDict[distanceSqrt] = lightNum
-    distanceList.append(distanceSqrt)
+    distanceSqrt = round(distance ** 0.5, 4)
+    distanceList.append([distanceSqrt, lightNum])
     lightNum += 1
 
 distanceList.sort()
@@ -75,15 +73,29 @@ distanceList.sort()
 lightOrder = []
 
 for distance in distanceList:
-    lightOrder.append(distanceDict[distance])
+    lightOrder.append(distance[1])
 
 pixels.fill((0, 0, 0))
 pixels.show()
 
-reps = 0
+def Colors(num):
+    if num <= 139:
+        return (255, 0, 0)
+    elif num <= 278:
+        return (0, 255, 0)
+    elif num <= 417:
+        return (0, 0, 255)
 
-while reps < 100:
-    pixels[lightOrder[reps]] = (255, 255, 255)
+
+reps = 0
+rep = 0
+
+
+while rep < 100:
+    while reps < 100:
+        thisDistance = distanceList[reps] - (rep * 2)
+        pixels[lightOrder[reps]] = Colors(thisDistance%417)
+        reps += 1
+    reps = 0
     pixels.show()
-    sleep(0.01)
-    reps += 1
+    rep += 1
