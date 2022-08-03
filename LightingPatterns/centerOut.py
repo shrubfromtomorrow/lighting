@@ -91,9 +91,9 @@ reps = 0
 rep = 0
 
 
-while rep < 100:
+while rep < 1000:
     while reps < 100:
-        thisDistance = distanceList[reps] - (rep * 2)
+        thisDistance = distanceList[reps][0] - (rep * 20)
         pixels[lightOrder[reps]] = Colors(thisDistance%417)
         reps += 1
     reps = 0
