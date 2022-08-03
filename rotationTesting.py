@@ -86,29 +86,26 @@ while loops < 4:
     if newCoords[0][0][0] > 0 and newCoords[0][0][1] > 0:
         radians = round(radians, 4)
     elif newCoords[0][0][0] < 0 and newCoords[0][0][1] > 0:
-        radians += math.pi / 2
+        radians += math.pi
         radians = round(radians, 4)
     elif newCoords[0][0][0] < 0 and newCoords[0][0][1] < 0:
-        radians += math.pi / 2
+        radians += math.pi
         radians = round(radians, 4)
     elif newCoords[0][0][0] > 0 and newCoords[0][0][1] < 0:
         radians += math.pi * 2
         radians = round(radians, 4)
-
-    if newCoords[0][0][0] > 0 and newCoords[0][0][1] > 0:
         print(radians)
+
+    if 0 < radians <= math.pi / 2:
         ax.quiver(newCoords[0][0][0], newCoords[0][0][1], color = "red", angles='xy', scale_units='xy', scale=1)
         print("0-1/2pi")
-    elif newCoords[0][0][0] < 0 and newCoords[0][0][1] > 0:
-        print(radians)
+    elif math.pi / 2 < radians <= math.pi:
         ax.quiver(newCoords[0][0][0], newCoords[0][0][1], color = "green", angles='xy', scale_units='xy', scale=1)
         print("1/2pi-pi")
-    elif newCoords[0][0][0] < 0 and newCoords[0][0][1] < 0:
-        print(radians)
+    elif math.pi < radians <= math.pi * 1.5:
         ax.quiver(newCoords[0][0][0], newCoords[0][0][1], color = "blue", angles='xy', scale_units='xy', scale=1)
         print("1pi-1.5pi")
-    elif newCoords[0][0][0] > 0 and newCoords[0][0][1] < 0:
-        print(radians)
+    elif math.pi * 1.5 < math.pi * 2:
         ax.quiver(newCoords[0][0][0], newCoords[0][0][1], color = "purple", angles='xy', scale_units='xy', scale=1)
         print("1.5pi-2pi")
     lightNum = 0

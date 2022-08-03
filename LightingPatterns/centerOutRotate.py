@@ -1,12 +1,12 @@
+import numpy as np
+import math
 import board
 import neopixel
 from time import sleep
-from random import randint
-import sys
+
 pixels = neopixel.NeoPixel(board.D18, 100, brightness = 1, auto_write = False, pixel_order = neopixel.RGB)
-pixels.fill((0, 0, 0))
-pixels.show()
-sleep(1)
+
+
 lightCoords = [(116, 437), (129, 483), (134, 522),
 (88, 540), (133, 575), (96, 639), (134, 639),
 (126, 672), (172, 653), (172, 656), (246, 622),
@@ -58,62 +58,61 @@ averageY = ((yS[highXY][0]) + (yS[lowXY][0])) / 2 #average of highest and lowest
 
 centerCoord = (averageX, averageY)
 
-centerCoordSum = averageX + averageY
 
-closestLights = {} #dictionary tying absolute value difference between center and any given light with the lightnum
-closestLightsCoord = [] #list of absolute value difference between center and any given light in sorted order
-colorDict = {}
-
+distanceList = []
+newCoords = []
 lightNum = 0
 
 for light in lightCoords:
-    sum = centerCoordSum - (light[0] + light[1])
-    closestLights[sum] = lightNum
-    colorDict[lightNum] = sum
-    closestLightsCoord.append(sum)
+    xDif = light[0] - centerCoord[0]
+    yDif = light[1] - centerCoord[1]
+    newCoords.append([[xDif, -1 * yDif], lightNum])
+    distance = (xDif ** 2) + (yDif ** 2)
+    distanceSqrt = round(distance ** 0.5, 4)
+    distanceList.append([distanceSqrt, lightNum])
     lightNum += 1
+distanceList.sort()
 
-closestLightsCoord = sorted(closestLightsCoord, key=abs)
+##############################################
 
-lightOrder = []
+lightNum = 0
+loops = 0
 
-for difference in closestLightsCoord:
-    lightOrder.append(closestLights[difference])
+while loops < 100:
+    for light in newCoords:
+        startingVector = np.array([[light[0][0]], [light[0][1]]])
+        angle = math.pi/12
+        rotationMatrix = np.array([[math.cos(angle), -math.sin(angle)], [math.sin(angle), math.cos(angle)]])
+        resUnrounded = np.matmul(rotationMatrix, startingVector)
+        res = np.round(resUnrounded, decimals=2)
+        newCoords[lightNum] = [[res[0][0], res[1][0]], lightNum]
 
-def Colors(num):
-    if abs(num) <= 0.5:
-        return (255, 0, 0)
-    elif abs(num) <= 0.5 + (45.95*1):
-        return (200, 50, 0)
-    elif abs(num) <= 0.5 + (45.95*2):
-        return (150, 100, 0)
-    elif abs(num) <= 0.5 + (45.95*3):
-        return (100, 150, 0)
-    elif abs(num) <= 0.5 + (45.95*4):
-        return (50, 200, 0)
-    elif abs(num) <= 0.5 + (45.95*5):
-        return (0, 255, 0)
-    elif abs(num) <= 0.5 + (45.95*6):
-        return (0, 200, 50)
-    elif abs(num) <= 0.5 + (45.95*7):
-        return (0, 150, 100)
-    elif abs(num) <= 0.5 + (45.95*8):
-        return (0, 100, 150)
-    elif abs(num) <= 0.5 + (45.95*9):
-        return (0, 50, 200)
-    else:
-        return (0, 0, 255)
+        radians = math.atan(newCoords[lightNum][0][1] / newCoords[lightNum][0][0])
 
-rep = 0
 
-rotations = 0
+        if newCoords[lightNum][0][0] > 0 and newCoords[lightNum][0][1] > 0:
+            radians = round(radians, 4)
+        elif newCoords[lightNum][0][0] < 0 and newCoords[lightNum][0][1] > 0:
+            radians += math.pi
+            radians = round(radians, 4)
+        elif newCoords[lightNum][0][0] < 0 and newCoords[lightNum][0][1] < 0:
+            radians += math.pi
+            radians = round(radians, 4)
+        elif newCoords[lightNum][0][0] > 0 and newCoords[lightNum][0][1] < 0:
+            radians += math.pi * 2
+            radians = round(radians, 4)
 
-while rotations < 2500:
-    while rep < 100:
-        color = Colors(colorDict[lightOrder[rep]]+rotations)
-        pixelIndex = lightOrder[rep]
-        pixels[pixelIndex] = color
-        rep += 1
-    rep = 0
-    rotations += 1
+        if 0 < radians <= math.pi / 2:
+            pixels[lightNum] = (255, 0, 0)
+        elif math.pi / 2 < radians <= math.pi:
+            pixels[lightNum] = (0, 255, 0)
+        elif math.pi < radians <= math.pi * 1.5:
+            pixels[lightNum] = (0, 0, 255)
+        elif math.pi * 1.5 < radians <= math.pi * 2:
+            pixels[lightNum] = (255, 0, 255)
+        lightNum += 1
+
     pixels.show()
+    sleep(0.05)
+    lightNum = 0
+    loops += 1
