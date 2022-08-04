@@ -78,10 +78,19 @@ distanceList.sort()
 lightNum = 0
 loops = 0
 
+def Hex(num):
+    num = str(num)
+    splitStr = num.split(" ")
+    r = int(splitStr[0], 16)
+    g = int(splitStr[1], 16)
+    b = int(splitStr[2], 16)
+    dec = (r, g, b)
+    return dec
+
 while loops < 100:
     for light in newCoords:
         startingVector = np.array([[light[0][0]], [light[0][1]]])
-        angle = math.pi/12
+        angle = math.pi/2.5
         rotationMatrix = np.array([[math.cos(angle), -math.sin(angle)], [math.sin(angle), math.cos(angle)]])
         resUnrounded = np.matmul(rotationMatrix, startingVector)
         res = np.round(resUnrounded, decimals=2)
@@ -102,17 +111,23 @@ while loops < 100:
             radians += math.pi * 2
             radians = round(radians, 4)
 
-        if 0 < radians <= math.pi / 2:
-            pixels[lightNum] = (255, 0, 0)
-        elif math.pi / 2 < radians <= math.pi:
-            pixels[lightNum] = (0, 255, 0)
-        elif math.pi < radians <= math.pi * 1.5:
-            pixels[lightNum] = (0, 0, 255)
-        elif math.pi * 1.5 < radians <= math.pi * 2:
-            pixels[lightNum] = (255, 0, 255)
+        if 0 < radians <= (2*math.pi) / 7:
+            pixels[lightNum] = Hex("ff 00 00")
+        elif (2*math.pi) / 7 < radians <= (4*math.pi) / 7:
+            pixels[lightNum] = Hex("ff a5 00")
+        elif (4*math.pi) / 7 < radians <= (6*math.pi) / 7:
+            pixels[lightNum] = Hex("ff ff 00")
+        elif (6*math.pi) / 7 < radians <= (8*math.pi) / 7:
+            pixels[lightNum] = Hex("00 80 00")
+        elif (8*math.pi) / 7 < radians <= (10*math.pi) / 7:
+            pixels[lightNum] = Hex("00 00 ff")
+        elif (10*math.pi) / 7 < radians <= (12*math.pi) / 7:
+            pixels[lightNum] = Hex("4b 00 82")
+        elif (12*math.pi) / 7 < radians <= (14*math.pi) / 7:
+            pixels[lightNum] = Hex("ee 82 ee")
         lightNum += 1
 
     pixels.show()
-    sleep(0.05)
+    sleep(0.01)
     lightNum = 0
     loops += 1
