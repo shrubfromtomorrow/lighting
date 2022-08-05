@@ -18,3 +18,6 @@ while loops < 1000:
 et = time.time()
 elapsedTime = et - st
 print(f"Elapsed time: {elapsedTime} seconds")
+
+#100 lights exec time is 10.3855 sec
+#50 lights exec time s 5.29201 sec

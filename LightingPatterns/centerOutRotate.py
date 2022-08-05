@@ -90,7 +90,7 @@ def Hex(num):
 while loops < 100:
     for light in newCoords:
         startingVector = np.array([[light[0][0]], [light[0][1]]])
-        angle = math.pi/2.5
+        angle = math.pi/12
         rotationMatrix = np.array([[math.cos(angle), -math.sin(angle)], [math.sin(angle), math.cos(angle)]])
         resUnrounded = np.matmul(rotationMatrix, startingVector)
         res = np.round(resUnrounded, decimals=2)

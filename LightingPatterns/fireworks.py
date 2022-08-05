@@ -1,12 +1,11 @@
 import board
 import neopixel
 from time import sleep
-from random import randint
+from random import choice
 import sys
-import colorsys
+import math
 pixels = neopixel.NeoPixel(board.D18, 100, brightness = 1, auto_write = False, pixel_order = neopixel.RGB)
-pixels.fill((0, 0, 0))
-pixels.show()
+
 lightCoords = [(116, 437), (129, 483), (134, 522),
 (88, 540), (133, 575), (96, 639), (134, 639),
 (126, 672), (172, 653), (172, 656), (246, 622),
@@ -34,46 +33,49 @@ lightCoords = [(116, 437), (129, 483), (134, 522),
  (596, 499), (602, 501), (589, 550), (589, 555),
  (591, 582)]
 
-xS = []
-lightNum = 0
-
-for light in lightCoords:
-    xS.append([light[0], lightNum])
-    lightNum += 1
-
-xS.sort()
-
-def hsv2rgb(h,s,v):
-    return tuple(round(i * 255) for i in colorsys.hsv_to_rgb(h,s,v))
-def Colors(num):
-    if num <= 602*(1/10):
-        return hsv2rgb(0.0602+(0.09398*1), 1, 1)
-    elif num <= 602*(2/10):
-        return hsv2rgb(0.0602+(0.09398*2), 1, 1)
-    elif num <= 602*(3/10):
-        return hsv2rgb(0.0602+(0.09398*3), 1, 1)
-    elif num <= 602*(4/10):
-        return hsv2rgb(0.0602+(0.09398*4), 1, 1)
-    elif num <= 602*(5/10):
-        return hsv2rgb(0.0602+(0.09398*5), 1, 1)
-    elif num <= 602*(6/10):
-        return hsv2rgb(0.0602+(0.09398*6), 1, 1)
-    elif num <= 602*(7/10):
-        return hsv2rgb(0.0602+(0.09398*7), 1, 1)
-    elif num <= 602*(8/10):
-        return hsv2rgb(0.0602+(0.09398*8), 1, 1)
-    elif num <= 602*(9/10):
-        return hsv2rgb(0.0602+(0.09398*9), 1, 1)
-    elif num <= 602*(10/10):
-        return hsv2rgb(0.0602+(0.09398*10), 1, 1)
-
 
 rep = 0
+reps = 0
 
-while rep < 100:
-    color = Colors(int(xS[rep][0]))
-    pixelIndex = int(xS[rep][1])
-    pixels[pixelIndex] = color
+def Colors(num):
+    if num <= 0:
+        return (255, 255, 255)
+    elif num <= 100:
+        return (255, 0, 0)
+    elif num <= 200:
+        return (255, 0, 0)
+    elif num <= 300:
+        return (0, 255, 0)
+    elif num <= 400:
+        return (0, 255, 255)
+    elif num <= 500:
+        return (0, 0, 255)
+    elif num <= 600:
+        return (255, 0, 255)
+    elif num > 600:
+        return (100, 255, 100)
+
+
+while rep < 10:
+    pixels.fill((0, 0, 0))
     pixels.show()
+    distanceList = []
+    lightNum = 0
+    centerCoord = choice(lightCoords)
+    for light in lightCoords:
+        xDif = abs(light[0] - centerCoord[0])
+        yDif = abs(light[1] - centerCoord[1])
+        distance = (xDif ** 2) + (yDif ** 2)
+        distanceSqrt = round(distance ** 0.5, 4)
+        distanceList.append([distanceSqrt, lightNum])
+        lightNum += 1
+    distanceList.sort()
+    lightOrder = []
+    for distance in distanceList:
+        lightOrder.append(distance[1])
+    while reps < 100:
+        pixels[lightOrder[reps]] = Colors(distanceList[reps][0])
+        pixels.show()
+        reps += 1
+    reps = 0
     rep += 1
-    sleep(0.01)
