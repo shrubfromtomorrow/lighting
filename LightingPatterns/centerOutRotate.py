@@ -4,7 +4,7 @@ import board
 import neopixel
 from time import sleep
 
-pixels = neopixel.NeoPixel(board.D18, 100, brightness = 0.5, auto_write = False, pixel_order = neopixel.RGB)
+pixels = neopixel.NeoPixel(board.D18, 200, brightness = 0.5, auto_write = False, pixel_order = neopixel.RGB)
 
 
 lightCoordsStr = []
@@ -55,7 +55,6 @@ for light in lightCoords:
     distanceList.append([distanceSqrt, lightNum])
     lightNum += 1
 distanceList.sort()
-
 ##############################################
 
 lightNum = 0
@@ -70,15 +69,16 @@ def Hex(num):
     dec = (r, g, b)
     return dec
 
-while loops < 100:
+while loops < 9:
     for light in newCoords:
         startingVector = np.array([[light[0][0]], [light[0][1]]])
         angle = math.pi/12
         rotationMatrix = np.array([[math.cos(angle), -math.sin(angle)], [math.sin(angle), math.cos(angle)]])
         resUnrounded = np.matmul(rotationMatrix, startingVector)
-        res = np.round(resUnrounded, decimals=2)
+        res = np.round(resUnrounded, decimals=3)
         newCoords[lightNum] = [[res[0][0], res[1][0]], lightNum]
-
+        if loops == 8 and lightNum == 194:
+            print(newCoords)
         radians = math.atan(newCoords[lightNum][0][1] / newCoords[lightNum][0][0])
 
 
@@ -111,6 +111,5 @@ while loops < 100:
         lightNum += 1
 
     pixels.show()
-    sleep(0.01)
     lightNum = 0
     loops += 1
