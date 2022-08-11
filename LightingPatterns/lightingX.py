@@ -4,7 +4,7 @@ from time import sleep
 from random import randint
 import sys
 import colorsys
-pixels = neopixel.NeoPixel(board.D18, 200, brightness = 1, auto_write = False, pixel_order = neopixel.RGB)
+pixels = neopixel.NeoPixel(board.D18, 300, brightness = 1, auto_write = False, pixel_order = neopixel.RGB)
 pixels.fill((0, 0, 0))
 pixels.show()
 lightCoordsStr = []
@@ -53,7 +53,7 @@ xS.sort()
 
 rep = 0
 
-while rep < 200:
+while rep < 300:
     color = (255, 255, 255)
     pixelIndex = int(xS[rep][1])
     pixels[pixelIndex] = color

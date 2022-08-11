@@ -1,8 +1,18 @@
-import board
-import neopixel
-from time import sleep
-pixels = neopixel.NeoPixel(board.D18, 100, brightness = 1, auto_write = False, pixel_order = neopixel.RGB)
-pixels.fill((0, 0, 0))
-pixels.show()
-pixels[13] = (255, 255, 255)
-pixels.show()
+import math
+def Spiral(loops, points):
+    loopRads = loops * (2*math.pi)
+    pointLocsRads = []
+    for point in range(1, points+1):
+        pointLocsRads.append((loopRads / points)*point)
+    radi = []
+    for radian in pointLocsRads:
+        radi.append(6*radian)
+    pointsLocs = []
+    pointNum = 0
+    for radius in radi:
+        x = round(math.cos(pointLocsRads[pointNum]) * radius, 3)
+        y = round(math.sin(pointLocsRads[pointNum]) * radius, 3)
+        pointsLocs.append([x, y])
+        pointNum += 1
+    return pointsLocs
+print(Spiral(4, 100))

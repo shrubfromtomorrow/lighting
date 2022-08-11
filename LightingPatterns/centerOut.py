@@ -4,7 +4,7 @@ from time import sleep
 from random import randint
 import sys
 import math
-pixels = neopixel.NeoPixel(board.D18, 200, brightness = 1, auto_write = False, pixel_order = neopixel.RGB)
+pixels = neopixel.NeoPixel(board.D18, 300, brightness = 1, auto_write = False, pixel_order = neopixel.RGB)
 
 lightCoordsStr = []
 
@@ -65,11 +65,11 @@ pixels.fill((0, 0, 0))
 pixels.show()
 
 def Colors(num):
-    if num <= 132:
+    if num <= 126:
         return (255, 0, 0)
-    elif num <= 264:
+    elif num <= 251:
         return (0, 255, 0)
-    elif num <= 395:
+    elif num <= 377:
         return (0, 0, 255)
 
 
@@ -77,10 +77,10 @@ reps = 0
 rep = 0
 
 
-while rep < 1000:
-    while reps < 200:
+while rep < 500:
+    while reps < 300:
         thisDistance = distanceList[reps][0] - (rep * 20)
-        pixels[lightOrder[reps]] = Colors(thisDistance%395)
+        pixels[lightOrder[reps]] = Colors(thisDistance%376)
         reps += 1
     reps = 0
     pixels.show()

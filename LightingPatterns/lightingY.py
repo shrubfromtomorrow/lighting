@@ -3,7 +3,7 @@ import neopixel
 from time import sleep
 from random import randint
 import sys
-pixels = neopixel.NeoPixel(board.D18, 200, brightness = 1, auto_write = False, pixel_order = neopixel.RGB)
+pixels = neopixel.NeoPixel(board.D18, 300, brightness = 1, auto_write = False, pixel_order = neopixel.RGB)
 
 lightCoordsStr = []
 
@@ -26,7 +26,7 @@ yS.sort()
 
 rep = 0
 
-while rep < 200:
+while rep < 300:
     pixelIndex = int(yS[rep][1])
     pixels[pixelIndex] = (255, 255, 255)
     pixels.show()
