@@ -5,8 +5,6 @@ from random import randint
 import sys
 import math
 
-pi = math.pi
-
 pixels = neopixel.NeoPixel(board.D18, 300, brightness = 1, auto_write = False, pixel_order = neopixel.RGB)
 
 lightCoordsStr = []
@@ -21,6 +19,31 @@ lightNum = 0
 for coordinate in lightCoordsStr:
     lightCoords.append([eval(coordinate), lightNum])
     lightNum += 1
+
+def Spiral(loops, pointsNum):
+    loopRads = loops * (2*math.pi)
+    pointLocsRads = []
+    for point in range(1, pointsNum+1):
+        pointLocsRads.append((loopRads / pointsNum)*point)
+    radi = []
+    for radian in pointLocsRads:
+        radi.append(18*radian)
+    pointsLocs = []
+    pointNum = 0
+    for radius in radi:
+        x = round(math.cos(pointLocsRads[pointNum]) * radius, 3)
+        y = round(math.sin(pointLocsRads[pointNum]) * radius, 3)
+        pointsLocs.append([x, y])
+        pointNum += 1
+    return pointsLocs
+
+def Closest(list, point):
+    valList = []
+    for light in list:
+        distanceSquared = (light[0][0] - point[0])**2 + (light[0][1] - point[1])**2
+        valList.append([round(distanceSquared, 3), light[1]])
+    valList.sort()
+    return valList[0]
 
 
 xS = [] #all y values
@@ -56,11 +79,23 @@ for light in lightCoords:
     newCoords.append([[xDif, -1 * yDif], lightNum])
     lightNum += 1
 
-def Spiral(loops, points, list):
-    loopRads = loops * (2*math.pi)
-    pointLocsRads = []
-    for point in range(1, points+1):
-        pointLocsRads.append((loopRads / points)*point)
-    radi = []
-    for radian in pointLocsRads:
-        radi.append(3*radian)
+pointsOnSpiral = None
+pointsOnSpiral = Spiral(4, 100)
+
+lights = []
+i = 0
+for point in pointsOnSpiral:
+    lights.append(Closest(newCoords, pointsOnSpiral[i]))
+    i += 1
+
+lightOrder = []
+
+
+for light in lights:
+    lightOrder.append(light[1])
+
+pixels.fill((0, 0, 0))
+pixels.show()
+for light in lightOrder:
+    pixels[light] = (255, 255, 255)
+pixels.show()
