@@ -5,7 +5,7 @@ from random import randint
 import sys
 import math
 
-pixels = neopixel.NeoPixel(board.D18, 300, brightness = 1, auto_write = False, pixel_order = neopixel.RGB)
+pixels = neopixel.NeoPixel(board.D18, 300, brightness = 0.5, auto_write = False, pixel_order = neopixel.RGB)
 
 lightCoordsStr = []
 
@@ -98,4 +98,4 @@ pixels.fill((0, 0, 0))
 pixels.show()
 for light in lightOrder:
     pixels[light] = (255, 255, 255)
-pixels.show()
+    pixels.show()

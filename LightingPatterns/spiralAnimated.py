@@ -1,16 +1,16 @@
-# import board
-# import neopixel
+import board
+import neopixel
 from time import sleep
 from random import randint
 import sys
 import math
 import numpy as np
 
-# pixels = neopixel.NeoPixel(board.D18, 300, brightness = 1, auto_write = False, pixel_order = neopixel.RGB)
+pixels = neopixel.NeoPixel(board.D18, 300, brightness = 1, auto_write = False, pixel_order = neopixel.RGB)
 
 lightCoordsStr = []
 
-with open(r'../lightCoords.txt', 'r') as coords:
+with open(r'lightCoords.txt', 'r') as coords:
     for line in coords:
         coord = line[:-1]
         lightCoordsStr.append(coord)
@@ -81,7 +81,7 @@ for light in lightCoords:
     lightNum += 1
 
 pointsOnSpiral = None
-pointsOnSpiral = Spiral(4, 100)
+pointsOnSpiral = Spiral(3, 100)
 
 lights = []
 i = 0
@@ -97,7 +97,7 @@ for light in lights:
 lightOrder = []
 
 loops = 0
-while loops < 10:
+while loops < 24:
     lightOrder.append([])
     lightNum = 0
     for light in lightOrderCoords:
@@ -112,4 +112,16 @@ while loops < 10:
         lightOrder[loops].append(Closest(newCoords, light)[1])
     loops += 1
 
-print(lightOrder)
+turns = 0
+pixels.fill((255, 255, 255))
+pixels.show()
+pixels.fill((0, 0, 0))
+pixels.show()
+sleep(3)
+while turns < len(lightOrder):
+    pixels.fill((0, 0, 0))
+    for light in lightOrder[turns]:
+        pixels[light] = (255, 255, 255)
+    pixels.show()
+    sleep(0.1)
+    turns += 1
