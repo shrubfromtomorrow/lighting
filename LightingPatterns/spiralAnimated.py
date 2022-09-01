@@ -1,16 +1,12 @@
-import board
-import neopixel
 from time import sleep
 from random import randint
 import sys
 import math
 import numpy as np
 
-pixels = neopixel.NeoPixel(board.D18, 300, brightness = 1, auto_write = False, pixel_order = neopixel.RGB)
-
 lightCoordsStr = []
 
-with open(r'lightCoords.txt', 'r') as coords:
+with open(r'../lightCoords.txt', 'r') as coords:
     for line in coords:
         coord = line[:-1]
         lightCoordsStr.append(coord)
@@ -28,7 +24,7 @@ def Spiral(loops, pointsNum):
         pointLocsRads.append((loopRads / pointsNum)*point)
     radi = []
     for radian in pointLocsRads:
-        radi.append(18*radian)
+        radi.append(36*radian)
     pointsLocs = []
     pointNum = 0
     for radius in radi:
@@ -81,7 +77,7 @@ for light in lightCoords:
     lightNum += 1
 
 pointsOnSpiral = None
-pointsOnSpiral = Spiral(3, 100)
+pointsOnSpiral = Spiral(1.25, 75)
 
 lights = []
 i = 0
@@ -97,13 +93,13 @@ for light in lights:
 lightOrder = []
 
 loops = 0
-while loops < 24:
+while loops < 48:
     lightOrder.append([])
     lightNum = 0
     for light in lightOrderCoords:
         startingVector = np.array([[light[0]], [light[1]]])
-        angle = math.pi/12
-        rotationMatrix = np.array([[math.cos(angle), -math.sin(angle)], [math.sin(angle), math.cos(angle)]])
+        angle = math.pi/24
+        rotationMatrix = np.array([[math.cos(angle), math.sin(angle)], [-math.sin(angle), math.cos(angle)]])
         resUnrounded = np.matmul(rotationMatrix, startingVector)
         res = np.round(resUnrounded, decimals=3)
         lightOrderCoords[lightNum] = [res[0][0], res[1][0]]
@@ -112,16 +108,7 @@ while loops < 24:
         lightOrder[loops].append(Closest(newCoords, light)[1])
     loops += 1
 
-turns = 0
-pixels.fill((255, 255, 255))
-pixels.show()
-pixels.fill((0, 0, 0))
-pixels.show()
-sleep(3)
-while turns < len(lightOrder):
-    pixels.fill((0, 0, 0))
-    for light in lightOrder[turns]:
-        pixels[light] = (255, 255, 255)
-    pixels.show()
-    sleep(0.1)
-    turns += 1
+with open(r'/home/orion/Code/Python/2DLighting/lightOrder.txt', 'w') as txt:
+    for turn in lightOrder:
+        # turn = [*set(turn)]
+        txt.write(f"{turn}\n")

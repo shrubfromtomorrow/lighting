@@ -1,12 +1,8 @@
-# import board
-# import neopixel
 from time import sleep
 from random import randint
 import sys
 import math
 import numpy as np
-
-# pixels = neopixel.NeoPixel(board.D18, 300, brightness = 1, auto_write = False, pixel_order = neopixel.RGB)
 
 lightCoordsStr = []
 
@@ -81,7 +77,7 @@ for light in lightCoords:
     lightNum += 1
 
 pointsOnSpiral = None
-pointsOnSpiral = Spiral(4, 100)
+pointsOnSpiral = Spiral(3, 100)
 
 lights = []
 i = 0
@@ -97,7 +93,7 @@ for light in lights:
 lightOrder = []
 
 loops = 0
-while loops < 10:
+while loops < 24:
     lightOrder.append([])
     lightNum = 0
     for light in lightOrderCoords:
@@ -112,4 +108,6 @@ while loops < 10:
         lightOrder[loops].append(Closest(newCoords, light)[1])
     loops += 1
 
-print(lightOrder)
+with open(r'/home/orion/Code/Python/2DLighting/lightOrder.txt', 'w') as txt:
+    for turn in lightOrder:
+        txt.write(f"{turn}\n")
