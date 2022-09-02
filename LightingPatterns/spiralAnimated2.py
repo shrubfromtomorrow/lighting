@@ -72,8 +72,8 @@ def Spiral(loopsNum, pointsNum, rotRad):
     pointsLocs = []
     pointNum = 0
     for radius in radi:
-        x = round(math.cos(pointLocsRadsAlt[pointNum]) * radius, 3)
-        y = round(-math.sin(pointLocsRadsAlt[pointNum]) * radius, 3)
+        x = round(-math.cos(pointLocsRadsAlt[pointNum]) * radius, 3)
+        y = round(math.sin(pointLocsRadsAlt[pointNum]) * radius, 3)
         pointsLocs.append([x, y])
         pointNum += 1
     return pointsLocs
@@ -82,9 +82,9 @@ lightOrder = []
 loops = 0
 while loops < 48:
     lightOrderCoords = []
-    rotRad = math.pi/24
+    rotRad = -math.pi/24
     lightOrder.append([])
-    lightOrderCoords = Spiral(1.25, 75, rotRad*loops)
+    lightOrderCoords = Spiral(1z, 75, rotRad*loops)
     for light in lightOrderCoords:
         lightOrder[loops].append(Closest(newCoords, light)[1])
     loops += 1
