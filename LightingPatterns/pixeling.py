@@ -2,6 +2,7 @@ from time import sleep
 from random import randint
 import sys
 import math
+import cv2
 
 lightCoordsStr = []
 
@@ -47,17 +48,33 @@ for value in lightCoords:
     yIndex = int((value[0][1] - yOrigin)*(3/119))
     pixelArray[yIndex][xIndex].append(value[1])
 
-lightOrder = []
 
-reps = 5
-while reps < 11:
-    lightOrder.append([])
-    for y in pixelArray[0:reps]:
-        for x in y[0:reps]:
-            for num in x[0:reps]:
-                lightOrder[reps-5].append(num)
-    reps += 1
+def Fill(index, color):
+    lightOrder = []
+    lightOrder.append([pixelArray[index[0]][index[1]], color])
+    return lightOrder
+
+def rgb_to_hex(rgb):
+    return '#%02x%02x%02x' % rgb
+
+pixelAssign = []
+
+im = cv2.imread('/home/orion/Pictures/l.png')
+imRGB = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)
+
+rowNum = 0
+for row in imRGB:
+    colNum = 0
+    for column in row:
+        color = (column[0], column[1], column[2])
+        # print(rgb_to_hex(color))
+        pixelAssign.append(Fill([rowNum, colNum], color))
+        colNum += 1
+    # print("\n")
+    rowNum += 1
+
+print(pixelAssign)
 
 with open(r'/home/orion/Code/Python/2DLighting/lightOrder.txt', 'w') as txt:
-    for rep in lightOrder:
+    for rep in pixelAssign:
         txt.write(f"{rep}\n")
