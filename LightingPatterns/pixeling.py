@@ -37,8 +37,8 @@ yOrigin = yS[0][0]
 xDif = xS[-1][0] - xS[0][0]
 yDif = yS[-1][0] - yS[0][0]
 
+pixelArray = []
 def DetArray(x, y):
-    pixelArray = []
     rows, cols = (y, x)
     for i in range(rows):
         col = []
@@ -46,23 +46,26 @@ def DetArray(x, y):
             col.append([])
         pixelArray.append(col)
     for value in lightCoords:
-        xIndex = int((value[0][0] - xOrigin)*((x-0.0001)/xDif))
-        yIndex = int((value[0][1] - yOrigin)*((y-0.0001)/yDif))
+        xIndex = int((value[0][0] - xOrigin)*((x-0.00001)/xDif))
+        yIndex = int((value[0][1] - yOrigin)*((y-0.00001)/yDif))
         pixelArray[yIndex][xIndex].append(value[1])
-    return pixelArray
 
 
-def Fill(index, color):
-    lightOrder = [DetArray(10, 15)[index[0]][index[1]], color]
-    return lightOrder
 
 # def rgb_to_hex(rgb):
 #     return '#%02x%02x%02x' % rgb
 
 pixelAssign = []
 
-im = cv2.imread('/home/orion/Pictures/o.png')
+im = cv2.imread('/home/orion/Pictures/PixelArt/stripes.png')
 imRGB = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)
+
+
+def Fill(index, color):
+    lightOrder = [pixelArray[index[0]][index[1]], color]
+    return lightOrder
+
+DetArray(len(imRGB[0]), len(imRGB))
 
 rowNum = 0
 for row in imRGB:
