@@ -19,12 +19,8 @@ lightOrder = []
 for loop in lightOrderStr:
     lightOrder.append(eval(loop))
 
-
-turns = 0
-while turns < len(lightOrder):
-    pixels.fill((0, 0, 0))
-    for light in lightOrder[turns]:
-        pixels[light] = (255, 255, 255)
-    pixels.show()
-    sleep(0.3)
-    turns += 1
+pixels.fill((0, 0, 0))
+for pixel in lightOrder:
+    for light in pixel[0]:
+        pixels[light] = pixel[1]
+pixels.show()

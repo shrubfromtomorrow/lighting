@@ -34,32 +34,34 @@ yS.sort()
 xOrigin = xS[0][0]
 yOrigin = yS[0][0]
 
-pixelArray = []
+xDif = xS[-1][0] - xS[0][0]
+yDif = yS[-1][0] - yS[0][0]
 
-rows, cols = (15, 10)
-for i in range(rows):
-    col = []
-    for j in range(cols):
-        col.append([])
-    pixelArray.append(col)
-
-for value in lightCoords:
-    xIndex = int((value[0][0] - xOrigin)*(5/217))
-    yIndex = int((value[0][1] - yOrigin)*(3/119))
-    pixelArray[yIndex][xIndex].append(value[1])
+def DetArray(x, y):
+    pixelArray = []
+    rows, cols = (y, x)
+    for i in range(rows):
+        col = []
+        for j in range(cols):
+            col.append([])
+        pixelArray.append(col)
+    for value in lightCoords:
+        xIndex = int((value[0][0] - xOrigin)*((x-0.0001)/xDif))
+        yIndex = int((value[0][1] - yOrigin)*((y-0.0001)/yDif))
+        pixelArray[yIndex][xIndex].append(value[1])
+    return pixelArray
 
 
 def Fill(index, color):
-    lightOrder = []
-    lightOrder.append([pixelArray[index[0]][index[1]], color])
+    lightOrder = [DetArray(10, 15)[index[0]][index[1]], color]
     return lightOrder
 
-def rgb_to_hex(rgb):
-    return '#%02x%02x%02x' % rgb
+# def rgb_to_hex(rgb):
+#     return '#%02x%02x%02x' % rgb
 
 pixelAssign = []
 
-im = cv2.imread('/home/orion/Pictures/l.png')
+im = cv2.imread('/home/orion/Pictures/o.png')
 imRGB = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)
 
 rowNum = 0
@@ -73,7 +75,6 @@ for row in imRGB:
     # print("\n")
     rowNum += 1
 
-print(pixelAssign)
 
 with open(r'/home/orion/Code/Python/2DLighting/lightOrder.txt', 'w') as txt:
     for rep in pixelAssign:
