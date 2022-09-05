@@ -19,10 +19,13 @@ lightOrder = []
 for loop in lightOrderStr:
     lightOrder.append(eval(loop))
 
-for frame in lightOrder:
-    pixels.fill((0, 0, 0))
-    for pixel in frame:
-        for light in pixel[0]:
-            pixels[light] = pixel[1]
-    # sleep(.5)
-    pixels.show()
+loops = 0
+while loops < 20:
+    for frame in lightOrder:
+        pixels.fill((0, 0, 0))
+        for pixel in frame:
+            for light in pixel[0]:
+                pixels[light] = pixel[1]
+        # sleep(.5)
+        pixels.show()
+    loops += 1

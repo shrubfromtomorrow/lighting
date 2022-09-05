@@ -62,7 +62,9 @@ def DetArray(x, y):
 
 fullPixelArray = []
 
-fileOrder = sorted(filter(lambda x: os.path.isfile(os.path.join("/home/orion/Pictures/PixelArt/frames/", x)), os.listdir("/home/orion/Pictures/PixelArt/frames/")))
+fileOrder = os.listdir("/home/orion/Pictures/PixelArt/frames/")
+print(fileOrder)
+fileOrder.sort(key=lambda f: int(''.join(filter(str.isdigit, f))))
 
 for file in fileOrder:
     print(file)
