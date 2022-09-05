@@ -3,6 +3,7 @@ from random import randint
 import sys
 import math
 import cv2
+import os
 
 lightCoordsStr = []
 
@@ -55,30 +56,42 @@ def DetArray(x, y):
 # def rgb_to_hex(rgb):
 #     return '#%02x%02x%02x' % rgb
 
-pixelAssign = []
-
-im = cv2.imread('/home/orion/Pictures/PixelArt/stripes.png')
-imRGB = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)
 
 
-def Fill(index, color):
-    lightOrder = [pixelArray[index[0]][index[1]], color]
-    return lightOrder
+# file = sys.argv[1]
 
-DetArray(len(imRGB[0]), len(imRGB))
+fullPixelArray = []
 
-rowNum = 0
-for row in imRGB:
-    colNum = 0
-    for column in row:
-        color = (column[0], column[1], column[2])
-        # print(rgb_to_hex(color))
-        pixelAssign.append(Fill([rowNum, colNum], color))
-        colNum += 1
-    # print("\n")
-    rowNum += 1
+fileOrder = sorted(filter(lambda x: os.path.isfile(os.path.join("/home/orion/Pictures/PixelArt/frames/", x)), os.listdir("/home/orion/Pictures/PixelArt/frames/")))
+
+for file in fileOrder:
+    print(file)
+    im = cv2.imread(f'/home/orion/Pictures/PixelArt/frames/{file}')
+    imRGB = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)
+
+
+    def Fill(index, color):
+        lightOrder = [pixelArray[index[0]][index[1]], color]
+        return lightOrder
+
+    DetArray(len(imRGB[0]), len(imRGB))
+
+    pixelAssign = []
+
+    rowNum = 0
+    for row in imRGB:
+        colNum = 0
+        for column in row:
+            color = (column[0], column[1], column[2])
+            # print(rgb_to_hex(color))
+            pixelAssign.append(Fill([rowNum, colNum], color))
+            colNum += 1
+        # print("\n")
+        rowNum += 1
+    fullPixelArray.append(pixelAssign)
+# print(fullPixelArray)
 
 
 with open(r'/home/orion/Code/Python/2DLighting/lightOrder.txt', 'w') as txt:
-    for rep in pixelAssign:
+    for rep in fullPixelArray:
         txt.write(f"{rep}\n")
