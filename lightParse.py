@@ -26,6 +26,6 @@ while loops < 20:
         for pixel in frame:
             for light in pixel[0]:
                 pixels[light] = pixel[1]
-        # sleep(.5)
+        sleep(.03)
         pixels.show()
     loops += 1

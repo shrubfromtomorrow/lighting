@@ -13,7 +13,7 @@ scp2 = ["scp", "/home/orion/Code/Python/2DLighting/lightParse.py", "pi@192.168.1
 run1 = ["ssh", "pi@192.168.10.223", f"sudo python3 lightParse.py"]
 
 os.chdir("/home/orion/Code/Python/2DLighting/LightingPatterns/")
-# subprocess.run(run)
+subprocess.run(run)
 subprocess.run(scp2)
 subprocess.run(scp)
 subprocess.run(run1)
