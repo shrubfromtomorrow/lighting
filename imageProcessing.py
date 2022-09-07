@@ -19,7 +19,7 @@ for image in os.listdir('Images/Images300'):
 
         lightGrey = np.copy(light)
         lightGrey = cv2.cvtColor(lightGrey, cv2.COLOR_RGB2GRAY)
-        lightBlur = cv2.GaussianBlur(lightGrey, (11, 11), 0)
+        lightBlur = cv2.GaussianBlur(lightGrey, (41, 41), 0)
         (minVal, maxVal, minLoc, maxLoc) = cv2.minMaxLoc(lightBlur)
 
         lightCirc = cv2.circle(lightRGB, maxLoc, 21, (0, 0, 255), 4)

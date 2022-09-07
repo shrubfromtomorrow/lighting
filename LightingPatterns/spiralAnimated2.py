@@ -84,7 +84,7 @@ while loops < 48:
     lightOrderCoords = []
     rotRad = -math.pi/24
     lightOrder.append([])
-    lightOrderCoords = Spiral(1z, 75, rotRad*loops)
+    lightOrderCoords = Spiral(1, 75, rotRad*loops)
     for light in lightOrderCoords:
         lightOrder[loops].append(Closest(newCoords, light)[1])
     loops += 1

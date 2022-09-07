@@ -77,7 +77,7 @@ for light in lightCoords:
     lightNum += 1
 
 pointsOnSpiral = None
-pointsOnSpiral = Spiral(1.25, 75)
+pointsOnSpiral = Spiral(1.5, 75)
 
 lights = []
 i = 0

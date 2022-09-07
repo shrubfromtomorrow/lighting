@@ -35,9 +35,11 @@ def Colors(num):
         return (255, 255, 0)
     elif num <= 605:
         return (255, 0, 255)
+    else:
+        return (255, 255, 255)
 
 
-while rep < 2:
+while rep < 5:
     pixels.fill((0, 0, 0))
     pixels.show()
     distanceList = []
