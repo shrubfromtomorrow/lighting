@@ -32,7 +32,7 @@ for loop in lightOrderStr:
 ############ This is code for pixeled lighting
 
 # loops = 0
-# while loops < 20:
+# while loops < 10:
 #     for frame in lightOrder:
 #         pixels.fill((0, 0, 0))
 #         for pixel in frame:
@@ -52,6 +52,6 @@ while loops < 5:
         for light in lightOrder[turns]:
             pixels[light] = (255, 255, 255)
         pixels.show()
-        sleep(0.01)
+        sleep(0.1)
         turns += 1
     loops += 1
