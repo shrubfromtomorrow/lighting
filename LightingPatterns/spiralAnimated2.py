@@ -80,7 +80,7 @@ def Spiral(loopsNum, pointsNum, rotRad):
 
 lightOrder = []
 loops = 0
-while loops < 48:
+while loops < 10:
     lightOrderCoords = []
     rotRad = -math.pi/24
     lightOrder.append([])

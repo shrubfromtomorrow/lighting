@@ -88,7 +88,7 @@ while loops < 10:
     lightOrderCoords = []
     rotRad = math.pi/2
     lightOrder.append([])
-    lightOrderCoords = Flower(4, 75, rotRad*loops)
+    lightOrderCoords = Flower(4, 75, rotRad)
     for light in lightOrderCoords:
         lightOrder[loops].append(Closest(newCoords, light)[1])
     loops += 1
