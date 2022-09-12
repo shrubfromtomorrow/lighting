@@ -13,11 +13,11 @@ for image in os.listdir('Images/Images300'):
     f = os.path.join('Images/Images300', image)
     if os.path.isfile(f):
         light = cv2.imread(f'Images/Images300/c{imNum}.png')
-
-        lightRGB = np.copy(light)
+        image = cv2.rotate(light, cv2.ROTATE_180)
+        lightRGB = np.copy(image)
         lightRGB = cv2.cvtColor(lightRGB, cv2.COLOR_RGB2BGR)
 
-        lightGrey = np.copy(light)
+        lightGrey = np.copy(image)
         lightGrey = cv2.cvtColor(lightGrey, cv2.COLOR_RGB2GRAY)
         lightBlur = cv2.GaussianBlur(lightGrey, (41, 41), 0)
         (minVal, maxVal, minLoc, maxLoc) = cv2.minMaxLoc(lightBlur)
