@@ -1,8 +1,9 @@
 import board
 import neopixel
 from random import choice
+from random import randint
 from time import sleep
-pixels = neopixel.NeoPixel(board.D18, 300, brightness = 0.05, auto_write = False, pixel_order = neopixel.GRB)
+pixels = neopixel.NeoPixel(board.D18, 300, brightness = 0.01, auto_write = False, pixel_order = neopixel.GRB)
 
 white = (255, 255, 255)
 black = (0, 0, 0)
@@ -14,10 +15,11 @@ teal = (0, 255, 255)
 purple = (255, 0, 255)
 
 colorList = [white, red, green, blue, yellow, teal, purple]
+christmas = [red, green]
 
 
 
-def bounce(fwdColor, bkwColor, fwdSkip, bkwSkip, sleepTime):
+def bounce(speed, fwdColor, bkwColor, fwdSkip, bkwSkip, sleepTime):
     j = 0
 
     i = 0
@@ -26,9 +28,9 @@ def bounce(fwdColor, bkwColor, fwdSkip, bkwSkip, sleepTime):
         if j % 2 == 0:
             while i < 299:
                 if i % fwdSkip == 0:
-                    pixels[i] = choice(colorList)
+                    pixels[i] = fwdColor
                     sleep(sleepTime)
-                if i % 5 == 0:
+                if i % speed == 0:
                     pixels.show()
                 i += 1
         else:
@@ -36,9 +38,9 @@ def bounce(fwdColor, bkwColor, fwdSkip, bkwSkip, sleepTime):
                 if i % bkwSkip == 0:
                     pixels[i] = bkwColor
                     sleep(sleepTime)
-                if i % 5 == 0:
+                if i % speed == 0:
                     pixels.show()
                 i -= 1
         j += 1
 
-bounce(white, black, 1, 1, 0)
+bounce(1, white, black, 1, 1, 0.02)
