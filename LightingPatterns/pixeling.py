@@ -62,19 +62,18 @@ def DetArray(x, y):
 
 fullPixelArray = []
 
-fileOrder = os.listdir("/home/orion/Pictures/PixelArt/2bLit/")
+fileOrder = os.listdir("/home/orion/Pictures/PixelArt/frames/")
 print(fileOrder)
-# fileOrder.sort(key=lambda f: int(''.join(filter(str.isdigit, f))))
+fileOrder.sort(key=lambda f: int(''.join(filter(str.isdigit, f))))
+
+def Fill(index, color):
+    lightOrder = [pixelArray[index[0]][index[1]], color]
+    return lightOrder
 
 for file in fileOrder:
     print(file)
-    im = cv2.imread(f'/home/orion/Pictures/PixelArt/2bLit/{file}')
+    im = cv2.imread(f'/home/orion/Pictures/PixelArt/frames/{file}')
     imRGB = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)
-
-
-    def Fill(index, color):
-        lightOrder = [pixelArray[index[0]][index[1]], color]
-        return lightOrder
 
     DetArray(len(imRGB[0]), len(imRGB))
 
@@ -90,6 +89,8 @@ for file in fileOrder:
             colNum += 1
         # print("\n")
         rowNum += 1
+    if file == '2.png':
+        print(pixelAssign)
     fullPixelArray.append(pixelAssign)
 # print(fullPixelArray)
 
