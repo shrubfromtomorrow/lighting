@@ -9,10 +9,10 @@ import os
 file = sys.argv[1]
 
 run = ["python3", f"{file}"]
-scp = ["scp", "/home/orion/Code/Python/2DLighting/lightOrder.txt", "pi@192.168.10.223:"]
-scp2 = ["scp", "/home/orion/Code/Python/2DLighting/lightParse.py", "pi@192.168.10.223:"]
+scp = ["scp", "/home/orion/Code/Python/2DLighting/lightOrder.txt", "pi@192.168.1.2:"]
+scp2 = ["scp", "/home/orion/Code/Python/2DLighting/lightParse.py", "pi@192.168.1.2:"]
 
-run1 = ["ssh", "pi@192.168.10.223", f"sudo python3 lightParse.py"]
+run1 = ["ssh", "pi@192.168.1.2", f"sudo python3 lightParse.py"]
 
 os.chdir("/home/orion/Code/Python/2DLighting/LightingPatterns/")
 subprocess.run(run)

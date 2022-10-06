@@ -50,18 +50,18 @@ for loop in lightOrderStr:
 
 ############ This is code for a lighting pattern
 
-pixels1 = neopixel.NeoPixel(board.D18, 150, brightness = 0.6, auto_write = False, pixel_order = neopixel.RGB) 
-pixels2 = neopixel.NeoPixel(board.D21, 150, brightness = 0.6, auto_write = False, pixel_order = neopixel.RGB)
-pixels1.fill((0, 0, 0))
-pixels2.fill((0, 0, 0))
-for pixel in lightOrder:
-    print(pixel)
-    if pixel in range(150, 300):
-        pixels2[pixel-150] = (255, 255, 255)
-    else:
-        pixels1[pixel] = (255, 255, 255)
-pixels1.show()
-pixels2.show()
+# pixels1 = neopixel.NeoPixel(board.D18, 150, brightness = 0.6, auto_write = False, pixel_order = neopixel.RGB) 
+# pixels2 = neopixel.NeoPixel(board.D21, 150, brightness = 0.6, auto_write = False, pixel_order = neopixel.RGB)
+# pixels1.fill((0, 0, 0))
+# pixels2.fill((0, 0, 0))
+# for pixel in lightOrder:
+#     print(pixel)
+#     if pixel in range(150, 300):
+#         pixels2[pixel-150] = (255, 255, 255)
+#     else:
+#         pixels1[pixel] = (255, 255, 255)
+# pixels1.show()
+# pixels2.show()
 
 ############ This is code for separating the lights into sections of 150 
 
@@ -81,4 +81,16 @@ pixels2.show()
 #        pixels1.show()
 #        pixels2.show()
 #    loops += 1
+
+
+pixels1 = neopixel.NeoPixel(board.D18, 300, brightness = 0.6, auto_write = False, pixel_order = neopixel.RGB) 
+loops = 0
+while loops < 50:
+   for frame in lightOrder:
+       pixels1.fill((0, 0, 0))
+       for pixel in frame:
+           for light in pixel[0]:
+                pixels1[light] = pixel[1]
+       pixels1.show()
+   loops += 1
 
