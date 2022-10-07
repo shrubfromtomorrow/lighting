@@ -9,10 +9,11 @@ imNum = 0
 lightDict = {}
 lightList = []
 
-for image in os.listdir('Images/Images300School'):
-    f = os.path.join('Images/Images300School', image)
+for image in os.listdir('Images/Images300'):
+    f = os.path.join('Images/Images300', image)
     if os.path.isfile(f):
-        light = cv2.imread(f'Images/Images300School/c{imNum}.png')
+        light = cv2.imread(f'Images/Images300/c{imNum}.png')
+        light = cv2.rotate(light, cv2.ROTATE_180)
         lightRGB = np.copy(light)
         lightRGB = cv2.cvtColor(lightRGB, cv2.COLOR_RGB2BGR)
 
@@ -23,9 +24,9 @@ for image in os.listdir('Images/Images300School'):
 
         lightCirc = cv2.circle(lightRGB, maxLoc, 21, (0, 0, 255), 4)
 
-        cv2.imwrite(f'Images/CircImages/CircImages300School/c{imNum}Alt.png', lightCirc)
+        cv2.imwrite(f'Images/CircImages/CircImages300/c{imNum}Alt.png', lightCirc)
 
-        lightDict[f'Images/Images300School/c{imNum}.png'] = maxLoc
+        lightDict[f'Images/Images300/c{imNum}.png'] = maxLoc
 
         lightList.append(maxLoc)
 

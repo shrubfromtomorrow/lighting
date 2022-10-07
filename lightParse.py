@@ -6,7 +6,7 @@ import math
 import numpy as np
 from random import randint
 
-#pixels = neopixel.NeoPixel(board.D18, 300, brightness = 0.6, auto_write = False, pixel_order = neopixel.RGB)
+pixels = neopixel.NeoPixel(board.D18, 300, brightness = 0.6, auto_write = False, pixel_order = neopixel.RGB)
 
 lightOrderStr = []
 
@@ -37,14 +37,12 @@ for loop in lightOrderStr:
 
 ############ This is code for pixeled lighting
 
-#loops = 0
-#while loops < 10:
+# loops = 0
+# while loops < 10:
 #    for frame in lightOrder:
 #        pixels.fill((0, 0, 0))
 #        for pixel in frame:
-#            for light in pixel[0]:
-#                pixels[light] = pixel[1]
-#        sleep(.03)
+#             pixels[pixel] = (255, 255, 255)
 #        pixels.show()
 #    loops += 1
 
@@ -62,6 +60,7 @@ for loop in lightOrderStr:
 #         pixels1[pixel] = (255, 255, 255)
 # pixels1.show()
 # pixels2.show()
+
 
 ############ This is code for separating the lights into sections of 150 
 
@@ -82,15 +81,25 @@ for loop in lightOrderStr:
 #        pixels2.show()
 #    loops += 1
 
+########### Single lane animation
 
-pixels1 = neopixel.NeoPixel(board.D18, 300, brightness = 0.6, auto_write = False, pixel_order = neopixel.RGB) 
-loops = 0
-while loops < 50:
-   for frame in lightOrder:
-       pixels1.fill((0, 0, 0))
-       for pixel in frame:
-           for light in pixel[0]:
-                pixels1[light] = pixel[1]
-       pixels1.show()
-   loops += 1
+# pixels1 = neopixel.NeoPixel(board.D18, 300, brightness = 0.6, auto_write = False, pixel_order = neopixel.RGB) 
+# loops = 0
+# while loops < 10:
+#     for frame in lightOrder:
+#         pixels1.fill((0, 0, 0))
+#         for pixel in frame:
+#            for light in pixel[0]:
+#                 pixels1[light] = pixel[1]
+#         pixels1.show()
+#         sleep(1)
+#     loops += 1
 
+
+# pixels1 = neopixel.NeoPixel(board.D18, 300, brightness = 0.6, auto_write = False, pixel_order = neopixel.RGB) 
+# for frame in lightOrder:
+#     pixels1.fill((0, 0, 0))
+#     for pixel in frame:
+#         for light in pixel[0]:
+#             pixels1[light] = pixel[1]
+#     pixels1.show()
