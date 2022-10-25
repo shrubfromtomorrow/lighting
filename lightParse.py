@@ -21,19 +21,19 @@ for loop in lightOrderStr:
 
 
 ############ This is code for single image pixel lighting
-# pixels1 = neopixel.NeoPixel(board.D18, 150, brightness = 0.6, auto_write = False, pixel_order = neopixel.RGB) 
-# pixels2 = neopixel.NeoPixel(board.D21, 150, brightness = 0.6, auto_write = False, pixel_order = neopixel.RGB)
-# for frame in lightOrder:
-#     pixels1.fill((0, 0, 0))
-#     pixels2.fill((0, 0, 0))
-#     for pixel in frame:
-#         for light in pixel[0]:
-#             if light in range(150, 300):
-#                 pixels2[light-150] = pixel[1]
-#             else:
-#                 pixels1[light] = pixel[1]
-#     pixels1.show()
-#     pixels2.show()
+pixels1 = neopixel.NeoPixel(board.D18, 150, brightness = 0.6, auto_write = False, pixel_order = neopixel.RGB) 
+pixels2 = neopixel.NeoPixel(board.D21, 150, brightness = 0.6, auto_write = False, pixel_order = neopixel.RGB)
+for frame in lightOrder:
+    pixels1.fill((0, 0, 0))
+    pixels2.fill((0, 0, 0))
+    for pixel in frame:
+        for light in pixel[0]:
+            if light in range(150, 300):
+                pixels2[light-150] = pixel[1]
+            else:
+                pixels1[light] = pixel[1]
+    pixels1.show()
+    pixels2.show()
 
 ############ This is code for pixeled lighting
 
