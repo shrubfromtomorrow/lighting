@@ -13,12 +13,12 @@ while True:
         i = 0
         while i < 300:
             if i % 10 == j:
-                pixels[i] = (255, 255, 255)
+                pixels[i] = ((17 / 20) * i, 255, 255)
                 i += 1
             else:
-                pixels[i] = (30, 30, 30)
+                pixels[i] = (0, 0, 0)
                 i += 1
-        pixels.show()
-        sleep(0.1)
+        if j % 1 == 0:
+            pixels.show()
         j += 1
     k += 1

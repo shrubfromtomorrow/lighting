@@ -19,7 +19,6 @@ while True:
                         if h % 2 == 0:
                             pixels.fill((0, 0, 0))
                             for x in range(1, 11):
-                                print(x)
                                 pixels[i-x] = (255, 255-(5*h), 255-(5*h))
                             h += 1
                             pixels.show()
@@ -35,7 +34,7 @@ while True:
                     pixels.fill((0, 0, 0))
                     for x in range(0, 10):
                         pixels[i-x] = (255, 255, 255)
-            if i % 2 == 0:
+            if i % 3 == 0:
                 pixels.show()
             i += 1
     else:
@@ -46,7 +45,6 @@ while True:
                     if h % 2 == 0:
                         pixels.fill((0, 0, 0))
                         for x in range(1, 11):
-                            print(x)
                             pixels[i-x] = (255, 255-(5*h), 255-(5*h))
                         h += 1
                         pixels.show()
@@ -62,7 +60,7 @@ while True:
                 pixels.fill((0, 0, 0))
                 for x in range(0, 10):
                     pixels[i-x] = (255, 255, 255)
-            if i % 2 == 0:
+            if i % 3 == 0:
                 pixels.show()
             i -= 1
     j += 1
