@@ -9,28 +9,32 @@ ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 ssh.connect('192.168.10.202', username='pi', password='raspberry')
 ssh_shell = ssh.invoke_shell()
 
-st = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+currentTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+st = time.time()
 
 parentDirectory = "Images/"
-imageDir = os.path.join(parentDirectory, st)
+imageDir = os.path.join(parentDirectory, currentTime)
 os.mkdir(imageDir)
 
+cap = cv2.VideoCapture(1)
 light = 0
 while light < 300:
     command = f"sudo python3 lightCapPi.py {light}\n"
     ssh_shell.send(command)
 
-    while not ssh_shell.recv_ready():
-        pass
-        time.sleep(0.01)
+    # Wait for signal from pi that light is ready
+    while True:
+        output = ssh_shell.recv(1024).decode()
+        if "Ready for picture" in output:
+            break
+        # time.sleep(0.1)
 
-    cap = cv2.VideoCapture(1)
-    ret,frame = cap.read()
-    cv2.imwrite(f'{os.path.join(imageDir, str(light))}.jpg',frame)
-    cap.release()
+    # Take picture
+    ret, frame = cap.read()
+    cv2.imwrite(f'{os.path.join(imageDir, str(light))}.jpg', frame)
     light += 1
 
-
+cap.release()
 ssh.close()
 et = time.time()
 elapsedTime = et - st
