@@ -21,7 +21,7 @@ subprocess.run(scp)
 subprocess.run(run1)
 #
 
-######## Code for ligthing pattern
+######## Code for lighting pattern
 
 
 # file = sys.argv[1]

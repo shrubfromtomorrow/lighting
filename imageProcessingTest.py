@@ -2,6 +2,7 @@ import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+import sys
 import subprocess
 
 imNum = 0
@@ -9,10 +10,12 @@ imNum = 0
 lightDict = {}
 lightList = []
 
-for image in os.listdir('Images/ImagesTest'):
-    f = os.path.join('Images/ImagesTest', image)
+os.mkdir(f'Images/CircImages/{sys.argv[1]}')
+
+for image in os.listdir(f'Images/{sys.argv[1]}'):
+    f = os.path.join(f'Images/{sys.argv[1]}', image)
     if os.path.isfile(f):
-        light = cv2.imread(f'Images/ImagesTest/c{imNum}.png')
+        light = cv2.imread(f'Images/{sys.argv[1]}/c{imNum}.png')
 
         lightRGB = np.copy(light)
         lightRGB = cv2.cvtColor(lightRGB, cv2.COLOR_RGB2BGR)
@@ -24,9 +27,9 @@ for image in os.listdir('Images/ImagesTest'):
 
         lightCirc = cv2.circle(lightRGB, maxLoc, 21, (0, 0, 255), 4)
 
-        cv2.imwrite(f'Images/CircImages/CircImagesTest/c{imNum}Alt.png', lightCirc)
+        cv2.imwrite(f'Images/CircImages/{sys.argv[1]}/c{imNum}Alt.jpg', lightCirc)
 
-        lightDict[f'Images/ImagesTest/c{imNum}.png'] = maxLoc
+        lightDict[f'Images/{sys.argv[1]}/c{imNum}.jpg'] = maxLoc
 
         lightList.append(maxLoc)
 
@@ -34,10 +37,9 @@ for image in os.listdir('Images/ImagesTest'):
 
     else:
         continue
-print(lightList)
-with open(r'/home/orion/Code/Python/2DLighting/lightCoords.txt', 'w') as txt:
+with open(r'./lightCoords.txt', 'w') as txt:
     for item in lightList:
         txt.write(f"{item}\n")
 
-scp = ["scp", f"/home/orion/Code/Python/2DLighting/lightCoords.txt", "pi@192.168.10.223:"]
-subprocess.run(scp)
+# scp = ["scp", f"/home/orion/Code/Python/2DLighting/lightCoords.txt", "pi@192.168.10.223:"]
+# subprocess.run(scp)

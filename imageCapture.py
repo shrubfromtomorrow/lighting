@@ -1,16 +1,16 @@
 import cv2
 import os
+import sys
 import paramiko
 import time
 # import subprocess
 
 ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-ssh.connect('192.168.10.202', username='pi', password='raspberry')
+ssh.connect(sys.argv[1], username='pi', password='raspberry')
 ssh_shell = ssh.invoke_shell()
 
 currentTime = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-st = time.time()
 
 parentDirectory = "Images/"
 imageDir = os.path.join(parentDirectory, currentTime)
@@ -36,9 +36,9 @@ while light < 300:
 
 cap.release()
 ssh.close()
-et = time.time()
-elapsedTime = et - st
-print(f"Elapsed time: {elapsedTime} seconds")
+
+print(currentTime, end="")
+
 
 
 
