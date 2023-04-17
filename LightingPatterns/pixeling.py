@@ -31,7 +31,6 @@ for light in lightCoords:
 xS.sort()
 yS.sort()
 
-
 xOrigin = xS[0][0]
 yOrigin = yS[0][0]
 
