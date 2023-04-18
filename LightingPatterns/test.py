@@ -1,23 +1,19 @@
-from time import sleep
-from random import randint
+import neopixel
+import board
+import time
 import sys
 import math
 import numpy as np
+from random import randint
 
-lightCoordsStr = []
+lightCount = 300
 
-with open(r'../lightCoords.txt', 'r') as coords:
-    for line in coords:
-        coord = line[:-1]
-        lightCoordsStr.append(coord)
+pixels = neopixel.NeoPixel(board.D18, lightCount, brightness = 0.6, auto_write = False, pixel_order = neopixel.RGB)
 
-lightCoords = []
-lightNum = 0
-for coordinate in lightCoordsStr:
-    lightCoords.append([eval(coordinate), lightNum])
-    lightNum += 1
-
-light = 199
- 
-with open(r'/home/orion/Code/Python/2DLighting/lightOrder.txt', 'w') as txt:
-    txt.write(f"{light}")
+for light in range(lightCount):
+    print(light)
+    pixels[light] = (255, 255, 255)
+    pixels.show()
+    time.sleep(0.1)
+    pixels.fill((0, 0, 0))
+    pixels.show()

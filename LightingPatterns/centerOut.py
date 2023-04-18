@@ -85,3 +85,4 @@ while rep < 500:
     reps = 0
     pixels.show()
     rep += 1
+    sleep(1)

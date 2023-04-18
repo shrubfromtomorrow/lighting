@@ -22,6 +22,7 @@ while True:
                                 pixels[i-x] = (255, 255-(5*h), 255-(5*h))
                             h += 1
                             pixels.show()
+                            sleep(0.1)
                             sleep(0.01)
                         else:
                             pixels.fill((0, 0, 0))
@@ -29,6 +30,7 @@ while True:
                                 pixels[i-x] = (255, 255-(5*h), 255-(5*h))
                             h += 1
                             pixels.show()
+                            sleep(0.1)
                             sleep(0.01)
                 else:
                     pixels.fill((0, 0, 0))
@@ -36,6 +38,7 @@ while True:
                         pixels[i-x] = (255, 255, 255)
             if i % 3 == 0:
                 pixels.show()
+                sleep(0.1)
             i += 1
     else:
         while i >= 1:
@@ -48,6 +51,7 @@ while True:
                             pixels[i-x] = (255, 255-(5*h), 255-(5*h))
                         h += 1
                         pixels.show()
+                        sleep(0.1)
                         sleep(0.01)
                     else:
                         pixels.fill((0, 0, 0))
@@ -55,6 +59,7 @@ while True:
                             pixels[i-x] = (255, 255-(5*h), 255-(5*h))
                         h += 1
                         pixels.show()
+                        sleep(0.1)
                         sleep(0.01)
             else:
                 pixels.fill((0, 0, 0))
@@ -62,5 +67,6 @@ while True:
                     pixels[i-x] = (255, 255, 255)
             if i % 3 == 0:
                 pixels.show()
+                sleep(0.1)
             i -= 1
     j += 1
