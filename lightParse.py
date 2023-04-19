@@ -8,7 +8,7 @@ from random import randint
 
 lightCount = 300
 
-pixels = neopixel.NeoPixel(board.D18, lightCount, brightness = 0.6, auto_write = False, pixel_order = neopixel.RGB)
+pixels = neopixel.NeoPixel(board.D21, lightCount, brightness = 0.6, auto_write = False, pixel_order = neopixel.RGB)
 
 lightOrderStr = []
 
@@ -31,7 +31,11 @@ with open('lightOrder', 'rb') as order:
         # TEST LIGHTING WHILE PARSING OR PARSING THEN LIGHTING AFTER USING LIGHTORDERSTR
 
 
-for light in lightOrderStr:
-    pixels[light[0]] = light[1]
+for i in range(300):
+    for light in lightOrderStr:
+        if light[0] == 299:
+            pixels.show()
+            # time.sleep(0.1)
+        pixels[light[0]] = light[1]
 
-pixels.show()
+# pixels.show()

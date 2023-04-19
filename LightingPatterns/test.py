@@ -8,12 +8,13 @@ from random import randint
 
 lightCount = 300
 
-pixels = neopixel.NeoPixel(board.D18, lightCount, brightness = 0.6, auto_write = False, pixel_order = neopixel.RGB)
+pixels = neopixel.NeoPixel(board.D21, lightCount, brightness = 0.6, auto_write = False, pixel_order = neopixel.RGB)
 
-for light in range(lightCount):
-    print(light)
-    pixels[light] = (255, 255, 255)
-    pixels.show()
-    time.sleep(0.1)
-    pixels.fill((0, 0, 0))
-    pixels.show()
+for i in range(20):
+    for light in range(lightCount):
+        print(light)
+        pixels[light] = (255, 255, 255)
+        pixels.show()
+        time.sleep(0.1)
+        pixels.fill((0, 0, 0))
+        pixels.show()

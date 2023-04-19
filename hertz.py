@@ -3,7 +3,7 @@ import neopixel
 from time import sleep
 from random import randint
 import time
-pixels = neopixel.NeoPixel(board.D18, 300, brightness = 1, auto_write = False, pixel_order = neopixel.RGB)
+pixels = neopixel.NeoPixel(board.D21, 300, brightness = 1, auto_write = False, pixel_order = neopixel.RGB)
 pixels.fill((0, 0, 0))
 loops = 0
 st = time.time()
