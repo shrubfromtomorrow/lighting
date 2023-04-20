@@ -8,9 +8,16 @@ from random import randint
 
 lightCount = 300
 
+sleepTime = sys.argv[1]
+
+loops = sys.argv[2]
+
+
 pixels = neopixel.NeoPixel(board.D21, lightCount, brightness = 0.6, auto_write = False, pixel_order = neopixel.RGB)
 
 lightOrderStr = []
+
+totalBytes = 0
 
 with open('lightOrder', 'rb') as order:
     while True:
@@ -25,17 +32,18 @@ with open('lightOrder', 'rb') as order:
             color = tuple(chunk[2:])
             lightOrderStr.append([lightNum, color])
             bytesRead += 5
+            totalBytes += 5
         if not chunk:
             break
 
         # TEST LIGHTING WHILE PARSING OR PARSING THEN LIGHTING AFTER USING LIGHTORDERSTR
 
 
-for i in range(300):
-    for light in lightOrderStr:
-        if light[0] == 299:
-            pixels.show()
-            # time.sleep(0.1)
-        pixels[light[0]] = light[1]
-
-# pixels.show()
+for loop in range(int(loops)):
+    # Loops through the number of frames, determined by the total bytes counted in previous loop, divided by 5 as each light is represented with 5 bytes, and divided by the light count.
+    for frame in range(0, int((totalBytes / 5) / lightCount)):
+        # Loops through all the lights in lightOrderStr in lightCount sized increments. So it would be 0,300 then 300, 400, etc..
+        for light in lightOrderStr[lightCount * frame :lightCount * (frame + 1)]:
+            pixels[light[0]] = light[1]
+        pixels.show()
+        time.sleep(float(sleepTime))

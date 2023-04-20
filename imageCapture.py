@@ -16,7 +16,7 @@ parentDirectory = "Images/"
 imageDir = os.path.join(parentDirectory, currentTime)
 os.mkdir(imageDir)
 
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 light = 0
 while light < 300:
     command = f"sudo python3 lightCapPi.py {light}\n"
