@@ -1,62 +1,45 @@
+# This file controls LEDs and lights them up in increasing x-coordinate order
+
 import board
 import neopixel
 from time import sleep
 from random import randint
 import sys
-import colorsys
-pixels = neopixel.NeoPixel(board.D18, 300, brightness = 1, auto_write = False, pixel_order = neopixel.RGB)
-pixels.fill((0, 0, 0))
-pixels.show()
-lightCoordsStr = []
 
+# Sets the delay between each light and the number of loops to the first and second argument inputted from running the program
+delay = sys.argv[1]
+loops = sys.argv[2]
+
+lightCoords = []
+lightNum = 0
+# Open lightCoords.txt and reads the coordinates of each light and its light number into a list of length 2
 with open(r'lightCoords.txt', 'r') as coords:
     for line in coords:
         coord = line[:-1]
-        lightCoordsStr.append(coord)
+        lightCoords.append([eval(coord), lightNum])
+        lightNum += 1
 
-lightCoords = []
-for coordinate in lightCoordsStr:
-    lightCoords.append(eval(coordinate))
+# Create separate list for x coordinates and their corresponding light number and sorts the list based on x value
 xS = []
 lightNum = 0
-
 for light in lightCoords:
     xS.append([light[0], lightNum])
     lightNum += 1
 
 xS.sort()
 
-# def hsv2rgb(h,s,v):
-#     return tuple(round(i * 255) for i in colorsys.hsv_to_rgb(h,s,v))
-# def Colors(num):
-#     if num <= 602*(1/10):
-#         return hsv2rgb(0.0602+(0.09398*1), 1, 1)
-#     elif num <= 602*(2/10):
-#         return hsv2rgb(0.0602+(0.09398*2), 1, 1)
-#     elif num <= 602*(3/10):
-#         return hsv2rgb(0.0602+(0.09398*3), 1, 1)
-#     elif num <= 602*(4/10):
-#         return hsv2rgb(0.0602+(0.09398*4), 1, 1)
-#     elif num <= 602*(5/10):
-#         return hsv2rgb(0.0602+(0.09398*5), 1, 1)
-#     elif num <= 602*(6/10):
-#         return hsv2rgb(0.0602+(0.09398*6), 1, 1)
-#     elif num <= 602*(7/10):
-#         return hsv2rgb(0.0602+(0.09398*7), 1, 1)
-#     elif num <= 602*(8/10):
-#         return hsv2rgb(0.0602+(0.09398*8), 1, 1)
-#     elif num <= 602*(9/10):
-#         return hsv2rgb(0.0602+(0.09398*9), 1, 1)
-#     elif num <= 602*(10/10):
-#         return hsv2rgb(0.0602+(0.09398*10), 1, 1)
 
+color = (255, 255, 255)
 
-rep = 0
+loop = 0
 
-while rep < 300:
-    color = (255, 255, 255)
-    pixelIndex = int(xS[rep][1])
-    pixels[pixelIndex] = color
-    pixels.show()
-    rep += 1
-    sleep(0.01)
+# Loops through all of the lights and turns each light to white in x-coordinate order. Loops as many times as declared at the beginning of this file
+while loop < loops:
+    light = 0
+    while light < 300:
+        pixelIndex = int(xS[rep][1])
+        pixels[pixelIndex] = color
+        pixels.show()
+        light += 1
+        sleep(delay)
+    loop += 1
