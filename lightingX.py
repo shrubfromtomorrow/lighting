@@ -5,6 +5,8 @@ import neopixel
 from time import sleep
 import sys
 
+pixels = neopixel.NeoPixel(board.D21, 300, brightness = 0.6, auto_write = False, pixel_order = neopixel.RGB)
+
 # Sets the delay between each light and the number of loops to the first and second argument inputted from running the program
 delay = float(sys.argv[1])
 loops = int(sys.argv[2])
@@ -36,7 +38,7 @@ loop = 0
 while loop < loops:
     light = 0
     while light < 300:
-        pixelIndex = int(xS[rep][1])
+        pixelIndex = int(xS[light][1])
         pixels[pixelIndex] = color
         pixels.show()
         light += 1

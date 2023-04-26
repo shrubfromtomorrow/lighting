@@ -10,8 +10,8 @@ def lighting():
     patternBool = int(input("Would you like to display a pattern (1) or a process an image (2)?: "))
 
     if patternBool == 1:
-        pattern = input("Please input the absolute directory to the pattern you wish to display: ")
         ip = input("Please enter the IP address of your Raspberry Pi: ")
+        pattern = input("Please input the absolute path to the pattern you wish to display: ")
         delay = float(input("Please select a delay time between each frame of the pattern (should it be an animation): "))
         loops = int(input("How many times do you want this to loop, if at all?: "))
 
@@ -39,7 +39,7 @@ def lighting():
 
         subprocess.run(run)
         subprocess.run(scpOrder)
-        subprocess.run(scpCoords)
+        subprocess.run(scpParse)
         subprocess.run(lightUp)
 
     else:

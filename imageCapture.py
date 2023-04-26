@@ -3,7 +3,6 @@ import os
 import sys
 import paramiko
 import time
-# import subprocess
 
 ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -16,9 +15,9 @@ parentDirectory = "Images/"
 imageDir = os.path.join(parentDirectory, currentTime)
 os.mkdir(imageDir)
 
-cap = cv2.VideoCapture(0)
 light = 0
 while light < 300:
+    cap = cv2.VideoCapture(0)
     command = f"sudo python3 lightCapPi.py {light}\n"
     ssh_shell.send(command)
 
@@ -27,14 +26,13 @@ while light < 300:
         output = ssh_shell.recv(1024).decode()
         if "Ready for picture" in output:
             break
-        # time.sleep(0.1)
 
     # Take picture
     ret, frame = cap.read()
     cv2.imwrite(f'{os.path.join(imageDir, str(light))}.jpg', frame)
+    cap.release()
     light += 1
 
-cap.release()
 ssh.close()
 
 print(currentTime, end="")

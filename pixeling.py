@@ -1,3 +1,4 @@
+""" This file takes in some number of images and maps individual LEDs to the pixel values of the images """
 import math
 import cv2
 import os
@@ -17,18 +18,12 @@ with open(r'lightCoords.txt', 'r') as coords:
 xS = []
 yS = []
 
-lightNum = 0
-
 for light in lightCoords:
-    xS.append([light[0][0], lightNum])
-    yS.append([light[0][1], lightNum])
-    lightNum += 1
+    xS.append([light[0][0], light[1]])
+    yS.append([light[0][1], light[1]])
 
 xS.sort()
 yS.sort()
-
-xOrigin = xS[0][0]
-yOrigin = yS[0][0]
 
 xDif = xS[-1][0] - xS[0][0]
 yDif = yS[-1][0] - yS[0][0]
@@ -39,38 +34,43 @@ def outputLightOrder(binary_file, file, parentDir):
 
     # Read images and determine width and height
     img = cv2.imread(os.path.join(parentDir, file))
-    width = img.shape[1]
-    height = img.shape[0]
-    lightNum = 0
 
-    for light in lightCoords:
-        
-        # This is a calculation of the ratio of the light x and y to the difference between max x and max y. Applying this same ratio to pixel value on image width or height:
+    try:
+        width = img.shape[1]
+        height = img.shape[0]
 
-        # lightX | ?
-        # ------ | ------
-        # xDif   | widthOfIm
+        for light in lightCoords:
+            
+            # This is a calculation of the ratio of the light x and y to the difference between max x and max y. Applying this same ratio to pixel value on image width or height:
 
-
-        newX = math.floor((light[0][0] - xS[0][0]) * (width - 1) / xDif)
-        newY = math.floor((light[0][1] - yS[0][0]) * (height - 1) / yDif)
-        
-        
-        # row then column is the correct order to reference a pixel in opencv
-        color = img[newY, newX]
-
-        
-        # Write bytes to binary file in big endian order. lightNum goes past 256 and this requires two bytes
-        binary_file.write(lightNum.to_bytes(2, byteorder='big'))
-        # Opencv outputs colors as BGR, this is red
-        binary_file.write(int(color[2]).to_bytes(1, byteorder='big'))
-        # Green
-        binary_file.write(int(color[1]).to_bytes(1, byteorder='big'))
-        # Blue
-        binary_file.write(int(color[0]).to_bytes(1, byteorder='big'))
+            # lightX | ?
+            # ------ | ------
+            # xDif   | widthOfIm
 
 
-        lightNum += 1
+            newX = math.floor((light[0][0]) * (width - 1) / xDif)
+            newY = math.floor((light[0][1]) * (height - 1) / yDif)
+            
+            
+            # row then column is the correct order to reference a pixel in opencv
+            color = img[newY, newX]
+
+
+            # Write bytes to binary file in big endian order. The light index (light[1]) goes past 256 and this requires two bytes
+            binary_file.write(light[1].to_bytes(2, byteorder='big'))
+            # Opencv outputs colors as BGR, this is red
+            binary_file.write(int(color[2]).to_bytes(1, byteorder='big'))
+            # Green
+            binary_file.write(int(color[1]).to_bytes(1, byteorder='big'))
+            # Blue
+            binary_file.write(int(color[0]).to_bytes(1, byteorder='big'))
+
+
+    except AttributeError:
+        print("There is a non-image type file in the directory you have given (make sure you have given the correct path?)")
+        exit(0)
+
+
 
 
 # Sort file names by the first number in their name, helps with organizing animations into frames
@@ -94,7 +94,7 @@ fileOrder = os.listdir(directory)
 
 # Try to sort filenames by number, if there are no numbers, it will output the binary file in default lexicographical order
 try:
-    sort_files_by_number(fileOrder)
+    fileOrder = sort_files_by_number(fileOrder)
     with open("lightOrder", "wb") as binary_file:
         for file in fileOrder:
             outputLightOrder(binary_file, file, directory)
