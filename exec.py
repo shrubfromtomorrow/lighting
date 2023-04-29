@@ -1,4 +1,4 @@
-# This is the main program for executing lighting code
+""" This is the main program for executing lighting code """
 
 import subprocess
 import sys

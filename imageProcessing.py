@@ -1,3 +1,5 @@
+""" This file is used to take all of the images outputted from imageCapture.py and detect the brightest pixel """
+
 import cv2
 import numpy as np
 import os
@@ -33,6 +35,6 @@ for image in os.listdir(f'Images/{sys.argv[1]}'):
     else:
         continue
 print(lightList)
-with open(r'/home/orion/Code/Python/2DLighting/lightCoords.txt', 'w') as txt:
+with open(r'light_coords', 'w') as txt:
     for item in lightList:
         txt.write(f"{item}\n")

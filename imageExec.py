@@ -1,3 +1,5 @@
+""" This file is the a simple script that guides a user through the image capture and processing steps """
+
 import subprocess
 import os
 

@@ -1,3 +1,5 @@
+""" This is the file that is on the Raspberry Pi that is called by imageCapture.py to light an individual light up """
+
 import board
 import neopixel
 from time import sleep

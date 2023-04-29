@@ -1,3 +1,5 @@
+""" This file is used to capture an image of each LED """
+
 import cv2
 import os
 import sys
@@ -16,8 +18,8 @@ imageDir = os.path.join(parentDirectory, currentTime)
 os.mkdir(imageDir)
 
 light = 0
+cap = cv2.VideoCapture(0)
 while light < 300:
-    cap = cv2.VideoCapture(0)
     command = f"sudo python3 lightCapPi.py {light}\n"
     ssh_shell.send(command)
 
@@ -30,23 +32,9 @@ while light < 300:
     # Take picture
     ret, frame = cap.read()
     cv2.imwrite(f'{os.path.join(imageDir, str(light))}.jpg', frame)
-    cap.release()
     light += 1
 
+cap.release()
 ssh.close()
 
 print(currentTime, end="")
-
-
-
-
-# st = time.time()
-# light = 0
-# while light < 300:
-#     # subprocess.run(["ssh", "pi@192.168.10.223", f"sudo python3 lightCapPi.py {light}"])
-#     subprocess.run(["ssh", "pi@192.168.10.202", f"sudo python3 lightCapPi.py {light}"])
-#     cap = cv2.VideoCapture(1)
-#     ret,frame = cap.read()
-#     cv2.imwrite(f'Images/ImagesTest/c{str(light)}.jpg',frame)
-#     cap.release()
-#     light += 1

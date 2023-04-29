@@ -1,3 +1,5 @@
+""" This file is used to parse the information provided by lightOrder on the Raspberry Pi side """
+
 import neopixel
 import board
 import time

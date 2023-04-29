@@ -1,4 +1,4 @@
-# This file controls LEDs and lights them up in increasing x-coordinate order
+""" This file controls LEDs and lights them up in increasing x-coordinate order """
 
 import board
 import neopixel
